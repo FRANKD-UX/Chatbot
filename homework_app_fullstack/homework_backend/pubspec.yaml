@@ -1,0 +1,18 @@
+name: homework_backend
+description: A Dart backend API for the homework app
+version: 1.0.0
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  shelf: ^1.4.1
+  shelf_router: ^1.1.4
+  shelf_cors_headers: ^0.1.5
+  sqlite3: ^2.4.0
+  crypto: ^3.0.3
+  uuid: ^4.2.1
+
+dev_dependencies:
+  lints: ^3.0.0
+
