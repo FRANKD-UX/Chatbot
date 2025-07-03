@@ -240,6 +240,76 @@ static const String baseUrl = 'http://your-backend-url/api';
 - **Voice Integration**: Speech-to-text for question answering
 - **Gamification**: Points, badges, and achievement system
 
+
+
+## this is a map of the backend functionality that is written in python(Django Framework)
+Core Functionality
+
+User Management: Registration, login, profiles with subscription tracking
+Child Management: Parents can add multiple children with grades and subjects
+Question Processing: Text and image questions with AI-powered responses
+Payment Integration: M-Pesa integration for Kenyan market
+Subscription Management: Free, pay-per-use, and monthly plans
+
+AI Integration
+
+OpenAI GPT integration for processing questions
+Structured responses with explanations, step-by-step solutions
+Difficulty assessment and parent-friendly tips
+Asynchronous processing with Celery
+
+Monetization Features
+
+Free Tier: 3 questions per month
+Pay-per-use: KES 10 per question
+Monthly Subscription: KES 500 (unlimited)
+Family Plan: KES 1,000 (multiple children)
+
+Technical Highlights
+
+RESTful API with Django REST Framework
+PostgreSQL database with proper relationships
+Celery for background tasks and email notifications
+Docker containerization for easy deployment
+Comprehensive testing suite
+Admin interface for management
+Rate limiting and security features
+
+Kenya-Specific Features
+
+M-Pesa payment integration
+Kenyan timezone (Africa/Nairobi)
+KES currency support
+Local phone number validation
+
+API Endpoints
+The backend provides all the endpoints your Flutter app needs:
+
+Authentication & user management
+Child profiles
+Question submission and retrieval
+Payment processing
+Subscription management
+Usage analytics
+
+Setup Instructions
+
+Install dependencies from requirements.txt
+Set environment variables in .env file
+Run migrations to set up the database
+Start Celery for background processing
+Deploy with Docker using the provided compose file
+
+Next Steps
+
+Configure AI services (OpenAI/Claude API keys)
+Set up M-Pesa credentials for payments
+Configure email for notifications
+Add monitoring and logging
+Set up CI/CD pipeline
+
+We are yet to change the currencies to include Rands and all other currencies within Africa 
+
 ## 📝 License
 
 This project is open source and available under the [MIT License](LICENSE).
