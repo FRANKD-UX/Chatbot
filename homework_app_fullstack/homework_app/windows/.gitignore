@@ -15,4 +15,12 @@ x86/
 *.[Cc]ache
 # but keep track of directories ending in .cache
 !*.[Cc]ache/
+# Prevent environment and secrets from being pushed
 .env
+
+# Prevent all assets (images, fonts, etc.)
+homework_app_fullstack/homework_app/assets/
+
+# Ignore build and tool directories
+build/
+.dart_tool/

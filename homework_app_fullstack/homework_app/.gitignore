@@ -41,3 +41,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+# Prevent environment and secrets from being pushed
+.env
+
+# Prevent all assets (images, fonts, etc.)
+homework_app_fullstack/homework_app/assets/
+
+# Ignore build and tool directories
+build/
+.dart_tool/
