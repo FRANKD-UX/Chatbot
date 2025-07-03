@@ -1,0 +1,33 @@
+name: homework_backend
+description: Homework Helper Backend Service
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.8.0 <4.0.0'
+
+dependencies:
+  shelf: ^1.4.0
+  shelf_router: ^1.1.0
+  shelf_cors_headers: ^1.0.0
+  shelf_helmet: ^0.1.0
+  shelf_rate_limiter: ^1.0.0
+  shelf_logger: ^1.0.0
+  shelf_validate: ^3.0.0
+
+  postgres: ^3.0.0
+  redis: ^2.0.0
+  dotenv: ^1.0.0
+  envy: ^0.0.2
+  crypto: ^3.0.0
+  bcrypt: ^5.0.0
+  http: ^1.1.0
+  dart_jsonwebtoken: ^3.0.0
+  telemetry: ^0.1.0
+  path: ^1.8.0
+
+dev_dependencies:
+  test: ^1.24.0
+  mockito: ^5.4.0
+  lints: ^3.0.0
+  dart_frog_cli: ^1.0.0
