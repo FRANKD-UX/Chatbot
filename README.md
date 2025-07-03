@@ -24,11 +24,7 @@ A comprehensive homework management application built with Flutter for the front
 - **UI Components**: Custom widgets for chat bubbles, question cards, and progress indicators
 - **Responsive Design**: Optimized for both mobile and web platforms
 
-### Backend (Dart + Shelf)
-- **RESTful API**: Clean API endpoints for homework and user management
-- **Database**: SQLite for local data persistence
-- **CORS Support**: Cross-origin resource sharing for web compatibility
-- **Question Generation**: Dynamic homework question generation with multi-language support
+
 
 ## 📁 Project Structure
 
@@ -144,21 +140,6 @@ curl -X POST http://localhost:3000/api/homework/{homework_id}/answer \
   }'
 ```
 
-## 🧪 Testing
-
-### Backend Testing
-```bash
-cd homework_backend
-
-# Test API health
-curl http://localhost:3000/health
-
-# Test homework generation
-curl -X POST http://localhost:3000/api/homework/generate \
-  -H "Content-Type: application/json" \
-  -d '{"subject": "mathematics", "language": "english", "learnerId": "learner_1"}'
-```
-
 ### Frontend Testing
 ```bash
 cd homework_app
@@ -173,15 +154,6 @@ flutter analyze
 flutter build web
 ```
 
-## 🌐 Deployment
-
-### Backend Deployment
-The Dart backend can be deployed to any cloud platform that supports Dart applications:
-
-1. **Docker**: Create a Dockerfile for containerized deployment
-2. **Cloud Run**: Deploy to Google Cloud Run
-3. **Heroku**: Deploy using Heroku buildpacks
-4. **VPS**: Deploy to any virtual private server
 
 ### Frontend Deployment
 The Flutter web app can be deployed to:
@@ -223,18 +195,6 @@ static const String baseUrl = 'http://your-backend-url/api';
 - **CORS Configuration**: Properly configured for web deployment
 - **Data Sanitization**: User inputs are sanitized before database storage
 
-D
-C
-C
-C
-C
-C
-C
-a
-B
-B
-C
-
 - **Error Handling**: Comprehensive error handling throughout the applicatiOn
 
 ## 🚧 Known Issues & Limitations
@@ -255,7 +215,7 @@ C
 
 
 
-## this is a map of the backend functionality that is written in python(Django Framework)
+## This is a map of the backend functionality that is written in python(Django Framework)
 Core Functionality
 
 User Management: Registration, login, profiles with subscription tracking
