@@ -18,7 +18,7 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Spacer(),
+              const SizedBox(height: 32),
               
               // Logo placeholder
               Container(
@@ -110,8 +110,6 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              
-              const Spacer(),
             ],
           ),
         ),

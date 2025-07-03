@@ -376,7 +376,7 @@ class _ParentHomeworkBotScreenState extends State<ParentHomeworkBotScreen> {
                     color: Colors.grey.shade600,
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(width: 16),
                 if (homework.score != null) ...[
                   Icon(
                     Icons.star,

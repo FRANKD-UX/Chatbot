@@ -1,10 +1,21 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/app_state.dart';
 import 'providers/homework_service.dart';
 import 'screens/welcome_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(); // Load .env file
+  if (dotenv.env['VITE_SUPABASE_URL'] == null || dotenv.env['VITE_SUPABASE_ANON_KEY'] == null) {
+    throw Exception('Supabase environment variables not found. Make sure you have a .env file in the project root.');
+  }
+  await Supabase.initialize(
+    url: dotenv.env['VITE_SUPABASE_URL']!,
+    anonKey: dotenv.env['VITE_SUPABASE_ANON_KEY']!,
+  );
   runApp(const HomeworkApp());
 }
 
@@ -40,10 +51,11 @@ class HomeworkApp extends StatelessWidget {
               ),
             ),
           ),
-          cardTheme: CardTheme(
-            elevation: 2,
+          cardTheme: const CardThemeData(
+            surfaceTintColor: Colors.transparent,
+            elevation: 4,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(

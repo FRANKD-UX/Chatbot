@@ -26,80 +26,82 @@ class _HomeworkSelectionScreenState extends State<HomeworkSelectionScreen> {
       ),
       backgroundColor: Colors.grey.shade50,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title
-              const Text(
-                'Let\'s Do Your Homework',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              
-              const SizedBox(height: 32),
-              
-              // Subject Selection
-              const Text(
-                'Choose the Subject',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-              ),
-              
-              const SizedBox(height: 16),
-              
-              _buildSubjectSelection(),
-              
-              const SizedBox(height: 32),
-              
-              // Language Selection
-              const Text(
-                'Choose the Language',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
-              ),
-              
-              const SizedBox(height: 16),
-              
-              _buildLanguageSelection(),
-              
-              const Spacer(),
-              
-              // Proceed Button
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: _canProceed() ? () => _proceedToHomework(context) : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade600,
-                    foregroundColor: Colors.white,
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    disabledBackgroundColor: Colors.grey.shade300,
-                  ),
-                  child: const Text(
-                    'Proceed',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title
+                const Text(
+                  'Let\'s Do Your Homework',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
                 ),
-              ),
-            ],
+                
+                const SizedBox(height: 32),
+                
+                // Subject Selection
+                const Text(
+                  'Choose the Subject',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
+                
+                const SizedBox(height: 16),
+                
+                _buildSubjectSelection(),
+                
+                const SizedBox(height: 32),
+                
+                // Language Selection
+                const Text(
+                  'Choose the Language',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
+                
+                const SizedBox(height: 16),
+                
+                _buildLanguageSelection(),
+                
+                const SizedBox(height: 32),
+                
+                // Proceed Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: _canProceed() ? () => _proceedToHomework(context) : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade600,
+                      foregroundColor: Colors.white,
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      disabledBackgroundColor: Colors.grey.shade300,
+                    ),
+                    child: const Text(
+                      'Proceed',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

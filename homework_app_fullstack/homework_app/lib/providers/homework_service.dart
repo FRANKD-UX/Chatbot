@@ -1,17 +1,16 @@
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import '../models/homework.dart';
 import '../models/chat_message.dart';
+import '../services/supabase_service.dart';
 
 class HomeworkService extends ChangeNotifier {
-  static const String baseUrl = 'http://localhost:3000/api';
-  
+  bool useSupabase;
+  HomeworkService({this.useSupabase = true});
   Homework? _currentHomework;
   Subject? _selectedSubject;
   Language? _selectedLanguage;
   List<ChatMessage> _sessionMessages = [];
-  bool _isGeneratingQuestions = false;
+  bool _isGeneratingQuestions = true;
 
   // Getters
   Homework? get currentHomework => _currentHomework;
@@ -60,151 +59,77 @@ class HomeworkService extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Generate homework questions based on subject and language
-  Future<Homework> generateHomework({
+  // Generate homework (create in Supabase)
+  Future<void> generateHomework({
     required Subject subject,
     required Language language,
     required String learnerId,
   }) async {
     _isGeneratingQuestions = true;
     notifyListeners();
-
     try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/homework/generate'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'subject': subject.toString().split('.').last,
-          'language': language.toString().split('.').last,
-          'learnerId': learnerId,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final homework = Homework.fromJson(data);
-        _currentHomework = homework;
-        _isGeneratingQuestions = false;
-        notifyListeners();
-        return homework;
-      } else {
-        throw Exception('Failed to generate homework: ${response.statusCode}');
+      final data = {
+        'title': 'Homework for ${subject.toString().split('.').last}',
+        'subject': subject.toString().split('.').last,
+        'language': language.toString().split('.').last,
+        'description': 'Auto-generated homework',
+        'due_date': DateTime.now().add(Duration(days: 7)).toIso8601String(),
+        'created_at': DateTime.now().toIso8601String(),
+        'learner_id': learnerId,
+        'status': 'pending',
+        'score': null,
+      };
+      await SupabaseService.createHomework(data);
+      final homeworks = await SupabaseService.getHomeworkList(learnerId);
+      if (homeworks.isNotEmpty) {
+        _currentHomework = Homework.fromJson(homeworks.last);
       }
+      _isGeneratingQuestions = false;
+      notifyListeners();
     } catch (e) {
       _isGeneratingQuestions = false;
       notifyListeners();
-      throw Exception('Error generating homework: $e');
+      rethrow;
     }
   }
 
-  // Submit answer for a question
-  Future<bool> submitAnswer({
+  // Submit answer for a question (update in Supabase)
+  Future<void> submitAnswer({
     required String homeworkId,
     required String questionId,
     required String answer,
   }) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/homework/$homeworkId/answer'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'questionId': questionId,
-          'answer': answer,
-        }),
+    if (useSupabase) {
+      print('[HomeworkService] Submitting answer to Supabase');
+      await SupabaseService.submitAnswer(
+        homeworkId: homeworkId,
+        questionId: questionId,
+        answer: answer,
       );
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final isCorrect = data['isCorrect'] as bool;
-        
-        // Update the current homework with the new answer
-        if (_currentHomework != null) {
-          final updatedQuestions = _currentHomework!.questions.map((q) {
-            if (q.id == questionId) {
-              return q.copyWith(answer: answer, isCorrect: isCorrect);
-            }
-            return q;
-          }).toList();
-
-          _currentHomework = Homework(
-            id: _currentHomework!.id,
-            title: _currentHomework!.title,
-            subject: _currentHomework!.subject,
-            language: _currentHomework!.language,
-            description: _currentHomework!.description,
-            dueDate: _currentHomework!.dueDate,
-            createdAt: _currentHomework!.createdAt,
-            learnerId: _currentHomework!.learnerId,
-            status: _currentHomework!.status,
-            score: _currentHomework!.score,
-            questions: updatedQuestions,
-          );
-          notifyListeners();
-        }
-
-        return isCorrect;
-      } else {
-        throw Exception('Failed to submit answer: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error submitting answer: $e');
     }
+    notifyListeners();
   }
 
-  // Complete homework session
-  Future<double> completeHomework(String homeworkId) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/homework/$homeworkId/complete'),
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final score = data['score'] as double;
-        
-        if (_currentHomework != null) {
-          _currentHomework = Homework(
-            id: _currentHomework!.id,
-            title: _currentHomework!.title,
-            subject: _currentHomework!.subject,
-            language: _currentHomework!.language,
-            description: _currentHomework!.description,
-            dueDate: _currentHomework!.dueDate,
-            createdAt: _currentHomework!.createdAt,
-            learnerId: _currentHomework!.learnerId,
-            status: HomeworkStatus.completed,
-            score: score,
-            questions: _currentHomework!.questions,
-          );
-          notifyListeners();
-        }
-
-        return score;
-      } else {
-        throw Exception('Failed to complete homework: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error completing homework: $e');
-    }
+  // Complete homework session (update status in Supabase)
+  Future<void> completeHomework(String homeworkId) async {
+    // Mock implementation: just notify listeners
+    notifyListeners();
   }
 
   // Get homework list for a user
   Future<List<Homework>> getHomeworkList(String userId) async {
-    try {
-      final response = await http.get(
-        Uri.parse('$baseUrl/homework/user/$userId'),
-        headers: {'Content-Type': 'application/json'},
-      );
+    final data = await SupabaseService.getHomeworkList(userId);
+    return data.map((item) => Homework.fromJson(item)).toList();
+  }
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body) as List;
-        return data.map((item) => Homework.fromJson(item)).toList();
-      } else {
-        throw Exception('Failed to get homework list: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error getting homework list: $e');
+  // Fetch questions for a homework from Supabase
+  Future<List<HomeworkQuestion>> getQuestions(Subject subject, Language language, {String? homeworkId}) async {
+    if (useSupabase && homeworkId != null) {
+      print('[HomeworkService] Fetching questions from Supabase');
+      final data = await SupabaseService.getQuestions(homeworkId);
+      return data.map((item) => HomeworkQuestion.fromJson(item)).toList();
+    } else {
+      return generateMockQuestions(subject, language);
     }
   }
 

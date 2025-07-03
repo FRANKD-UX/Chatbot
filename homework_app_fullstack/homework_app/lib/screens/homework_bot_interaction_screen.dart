@@ -26,161 +26,161 @@ class HomeworkBotInteractionScreen extends StatelessWidget {
       ),
       backgroundColor: Colors.grey.shade50,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-              
-              // Bot introduction text
-              const Text(
-                'Hi There! I\'m Your Bot from Homework Bot.',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 32),
+                
+                // Bot introduction text
+                const Text(
+                  'Hi There! I\'m Your Bot from Homework Bot.',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              
-              const SizedBox(height: 24),
-              
-              const Text(
-                'Click on the Image Button of the Bot to proceed with the Homework that you have chosen.',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                  height: 1.5,
+                
+                const SizedBox(height: 24),
+                
+                const Text(
+                  'Click on the Image Button of the Bot to proceed with the Homework that you have chosen.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              
-              const SizedBox(height: 48),
-              
-              // Bot image button
-              GestureDetector(
-                onTap: () => _startHomeworkSession(context),
-                child: Container(
-                  width: 200,
-                  height: 200,
+                
+                const SizedBox(height: 48),
+                
+                // Bot image button
+                GestureDetector(
+                  onTap: () => _startHomeworkSession(context),
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade100,
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue.shade200.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 15,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.smart_toy,
+                          size: 80,
+                          color: Colors.blue.shade600,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Homework Bot',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.blue.shade700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                
+                const SizedBox(height: 32),
+                
+                // Subject and Language info
+                Container(
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.blue.shade100,
-                    borderRadius: BorderRadius.circular(100),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.blue.shade200.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 15,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey.shade300),
                   ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.smart_toy,
-                        size: 80,
-                        color: Colors.blue.shade600,
+                      Row(
+                        children: [
+                          Icon(
+                            _getSubjectIcon(subject),
+                            color: Colors.green.shade600,
+                            size: 24,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'Subject: ${_getSubjectDisplayName(subject)}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        'Homework Bot',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.blue.shade700,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.language,
+                            color: Colors.green.shade600,
+                            size: 24,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'Language: ${_getLanguageDisplayName(language)}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                
+                const SizedBox(height: 32),
+                
+                // Tap instruction
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.yellow.shade50,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.yellow.shade300),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.touch_app,
+                        color: Colors.orange.shade600,
+                        size: 24,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          'Tap the bot to start your homework session!',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.orange.shade700,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              
-              const SizedBox(height: 32),
-              
-              // Subject and Language info
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          _getSubjectIcon(subject),
-                          color: Colors.green.shade600,
-                          size: 24,
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          'Subject: ${_getSubjectDisplayName(subject)}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.language,
-                          color: Colors.green.shade600,
-                          size: 24,
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          'Language: ${_getLanguageDisplayName(language)}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              
-              const Spacer(),
-              
-              // Tap instruction
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.yellow.shade50,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.yellow.shade300),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.touch_app,
-                      color: Colors.orange.shade600,
-                      size: 24,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        'Tap the bot to start your homework session!',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.orange.shade700,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

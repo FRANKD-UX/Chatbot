@@ -18,40 +18,40 @@ class ParentHomeScreen extends StatelessWidget {
       ),
       backgroundColor: Colors.grey.shade50,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Welcome message
-              Consumer<AppState>(
-                builder: (context, appState, child) {
-                  return Text(
-                    'Welcome, ${appState.currentUser?.name ?? 'Parent'}!',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  );
-                },
-              ),
-              
-              const SizedBox(height: 8),
-              
-              const Text(
-                'Manage your child\'s learning journey',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Welcome message
+                Consumer<AppState>(
+                  builder: (context, appState, child) {
+                    return Text(
+                      'Welcome, ${appState.currentUser?.name ?? 'Parent'}!',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    );
+                  },
                 ),
-              ),
-              
-              const SizedBox(height: 32),
-              
-              // Parent options
-              Expanded(
-                child: Column(
+                
+                const SizedBox(height: 8),
+                
+                const Text(
+                  'Manage your child\'s learning journey',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+                
+                const SizedBox(height: 32),
+                
+                // Parent options
+                Column(
                   children: [
                     // Manage Payments Card
                     _buildOptionCard(
@@ -75,7 +75,7 @@ class ParentHomeScreen extends StatelessWidget {
                       onTap: () => _navigateToHomeworkBot(context),
                     ),
                     
-                    const Spacer(),
+                    const SizedBox(height: 32),
                     
                     // Logout button
                     SizedBox(
@@ -101,8 +101,8 @@ class ParentHomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
